@@ -1,20 +1,21 @@
-const { Sequelize } = require("sequelize")
-
+const { Sequelize } = require('sequelize')
 const sequelize = new Sequelize(
-  process.env.DBNAME,
-  process.env.USERNAME,
-  process.env.PASSWORD,
+  process.env.DB_NAME,
+  process.env.DB_USER,
+  process.env.DB_PASSWORD,
   {
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
     dialect: 'mysql',
-    host: 'vset-db.cdgzyysga9qn.ap-south-1.rds.amazonaws.com',
+    logging: false,
+    define: {
+      timestamps: true,
+      underscored: true,
+      underscoredAll: true,
+      createdAt: 'created_at',
+      updatedAt: 'updated_at',
+      deletedAt: 'deleted_at',
+    },
   }
 )
-sequelize.authenticate()
-    .then((res) => {
-        console.log("database Connection done");
-    })
-    .catch((res) => {
-        console.log("database Connection failed");
-    })
-    
 module.exports = sequelize
